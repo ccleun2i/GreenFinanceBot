@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenFinance AI Chatbot PoC</title>
+    <style>
+        body {
+            /* ... your existing body styles ... */
+        }
+
+        #header {
+            /* ... your existing header styles ... */
+        }
+
+        #coze-chat-container {
+            /* ... your existing coze-chat-container styles ... */
+        }
+
+        h1 {
+            /* ... your existing h1 styles ... */
+        }
+
+        p {
+            /* ... your existing p styles ... */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <h1>GreenFinance AI Chatbot PoC</h1>
+        <p>Explore sustainable finance with our AI assistant.</p>
+    </div>
+
+    <div id="coze-chat-container"></div>
+
+    <script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/oversea/index.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            const chatClient = new CozeWebSDK.WebChatClient({
+                container: '#coze-chat-container',
+                config: {
+                    bot_id: '7471164989631086600',
+                },
+                componentProps: {
+                    title: 'GreenFinance AI',
+                },
+                auth: {
+                    type: 'token',
+                    token: 'pat_sTdmpE5zNHm56kBbmHTILzcF4QQgD3No6pKoly6eSr4wVuh1Ys6qNAja1VpPIvSM',
+                    onRefreshToken: function () {
+                        return 'pat_sTdmpE5zNHm56kBbmHTILzcF4QQgD3No6pKoly6eSr4wVuh1Ys6qNAja1VpPIvSM';
+                    }
+                }
+            });
+
+            function removePoweredByCoze() {
+                const poweredByElement = document.querySelector('#coze-chat-container div[style*="text-align: center;"]');
+                if (poweredByElement) {
+                    poweredByElement.style.display = 'none';
+                } else {
+                    setTimeout(removePoweredByCoze, 500);
+                }
+            }
+
+            removePoweredByCoze();
+        });
+    </script>
+
+</body>
+</html>
