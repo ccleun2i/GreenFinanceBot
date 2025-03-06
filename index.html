@@ -3,70 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenFinance AI Chatbot PoC</title>
+    <title>Green Finance Assistant</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
-            /* ... your existing body styles ... */
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            min-height: 100vh;
         }
 
-        #header {
-            /* ... your existing header styles ... */
+        .page-header {
+            text-align: center;
+            padding: 2rem;
+            background: #004D40;
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        #coze-chat-container {
-            /* ... your existing coze-chat-container styles ... */
+        .page-header h1 {
+            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        h1 {
-            /* ... your existing h1 styles ... */
+        .content-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,77,64,0.1);
         }
 
-        p {
-            /* ... your existing p styles ... */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 380px;
+            height: 600px;
+            border: 1px solid #A5D6A7;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,77,64,0.15);
+            background: white;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .chat-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .chat-header {
+            background: #00796B;
+            color: white;
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .chat-header .material-icons {
+            font-size: 24px;
+            color: #C8E6C9;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: #F1F8E9;
+            border-radius: 8px;
+            border-left: 4px solid #00796B;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .feature-card h3 {
+            color: #004D40;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .eco-icon {
+            color: #388E3C;
+            font-size: 20px;
+        }
+
+        .btn-green {
+            background: #00796B;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-green:hover {
+            background: #004D40;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,77,64,0.2);
         }
     </style>
+    <!-- Coze SDK -->
+    <script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/oversea/index.js"></script>
 </head>
 <body>
+    <header class="page-header">
+        <h1>
+            <span class="material-icons">eco</span>
+            Green Finance Assistant
+        </h1>
+        <p>Sustainable Banking Solutions for a Better Tomorrow</p>
+    </header>
 
-    <div id="header">
-        <h1>GreenFinance AI Chatbot PoC</h1>
-        <p>Explore sustainable finance with our AI assistant.</p>
+    <div class="content-section">
+        <h2 style="color: #004D40; margin-bottom: 1.5rem;">Sustainable Banking Services</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <h3>
+                    <span class="material-icons eco-icon">monetization_on</span>
+                    ESG Investments
+                </h3>
+                <p>Explore environmentally responsible investment opportunities with competitive returns.</p>
+            </div>
+            <div class="feature-card">
+                <h3>
+                    <span class="material-icons eco-icon">spa</span>
+                    Green Financing
+                </h3>
+                <p>Special loan programs for eco-friendly projects and sustainable business initiatives.</p>
+            </div>
+            <div class="feature-card">
+                <h3>
+                    <span class="material-icons eco-icon">account_balance</span>
+                    Advisory Services
+                </h3>
+                <p>Expert guidance on sustainable banking practices and financial planning.</p>
+            </div>
+        </div>
     </div>
 
-    <div id="coze-chat-container"></div>
+    <div id="coze-chat-container" class="chat-container">
+        <div class="chat-header">
+            <span class="material-icons">forum</span>
+            Sustainable Finance Assistant
+        </div>
+    </div>
 
-    <script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/oversea/index.js"></script>
     <script>
-        window.addEventListener('load', function() {
-            const chatClient = new CozeWebSDK.WebChatClient({
-                container: '#coze-chat-container',
+        document.addEventListener('DOMContentLoaded', function() {
+            new CozeWebSDK.WebChatClient({
                 config: {
                     bot_id: '7471164989631086600',
                 },
                 componentProps: {
-                    title: 'GreenFinance AI',
+                    title: 'Green Finanial Assistant',
+                    containerId: 'coze-chat-container',
+                    
                 },
                 auth: {
                     type: 'token',
                     token: 'pat_sTdmpE5zNHm56kBbmHTILzcF4QQgD3No6pKoly6eSr4wVuh1Ys6qNAja1VpPIvSM',
-                    onRefreshToken: function () {
+                    onRefreshToken: function() {
                         return 'pat_sTdmpE5zNHm56kBbmHTILzcF4QQgD3No6pKoly6eSr4wVuh1Ys6qNAja1VpPIvSM';
                     }
                 }
             });
-
-            function removePoweredByCoze() {
-                const poweredByElement = document.querySelector('#coze-chat-container div[style*="text-align: center;"]');
-                if (poweredByElement) {
-                    poweredByElement.style.display = 'none';
-                } else {
-                    setTimeout(removePoweredByCoze, 500);
-                }
-            }
-
-            removePoweredByCoze();
         });
     </script>
-
 </body>
 </html>
